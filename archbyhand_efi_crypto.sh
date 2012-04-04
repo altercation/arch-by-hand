@@ -125,6 +125,7 @@ Architecture = auto
 CacheDir = ${INSTALL_TARGET}/var/cache/pacman/pkg
 CacheDir = /packages/core-$(uname -m)/pkg
 CacheDir = /packages/core-any/pkg
+SigLevel = Never
 
 [core]
 Server = ${FILE_URL}
