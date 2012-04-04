@@ -202,7 +202,7 @@ mkfs.vfat /dev/sda1
 mkfs.ext4 /dev/mapper/root
 
 # mount target
-mkdir ${INSTALL_TARGET}
+mkdir -p ${INSTALL_TARGET}
 #mount /dev/sda3 ${INSTALL_TARGET} # this is where we'd mount the unencrypted root partition
 mount /dev/mapper/root ${INSTALL_TARGET}
 mkdir ${INSTALL_TARGET}/boot
