@@ -102,8 +102,10 @@ echo -n "Network address acquired."
 
 # Mount packages squashfs images
 # ------------------------------------------------------------------------
-umount "/packages/core-$(uname -m)"
-umount "/packages/core-any"
+# normally these do not exist/are not mounted yet,
+# but to be sure...: (interrupted previous run?)
+umount "/packages/core-$(uname -m)" 2>&1 | grep -vi 'not found'
+umount "/packages/core-any" 2>&1 | grep -vi 'not found'
 rm -rf "/packages/core-$(uname -m)"
 rm -rf "/packages/core-any"
 
