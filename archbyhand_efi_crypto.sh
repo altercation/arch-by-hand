@@ -151,7 +151,7 @@ ${TARGET_PACMAN} -Sy
 echo -e "\nInstalling prereqs...\n$HR"
 #sed -i "s/^#S/S/" /etc/pacman.d/mirrorlist # Uncomment all Server lines
 UncommentValue S /etc/pacman.d/mirrorlist # Uncomment all Server lines
-${PACMAN} --noconfirm -Sy gptfdisk btrfs-progs-unstable
+${PACMAN} --noconfirm -Sy gptfdisk btrfs-progs
 
 # ------------------------------------------------------------------------
 # Configure Host
