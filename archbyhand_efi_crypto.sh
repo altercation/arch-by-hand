@@ -102,8 +102,10 @@ echo -n "Network address acquired."
 
 # Mount packages squashfs images
 # ------------------------------------------------------------------------
-umount "/packages/core-$(uname -m)"
-umount "/packages/core-any"
+# normally these do not exist/are not mounted yet,
+# but to be sure...: (interrupted previous run?)
+umount "/packages/core-$(uname -m)" 2>&1 | grep -vi 'not found'
+umount "/packages/core-any" 2>&1 | grep -vi 'not found'
 rm -rf "/packages/core-$(uname -m)"
 rm -rf "/packages/core-any"
 
@@ -123,6 +125,7 @@ Architecture = auto
 CacheDir = ${INSTALL_TARGET}/var/cache/pacman/pkg
 CacheDir = /packages/core-$(uname -m)/pkg
 CacheDir = /packages/core-any/pkg
+SigLevel = Never
 
 [core]
 Server = ${FILE_URL}
@@ -148,7 +151,7 @@ ${TARGET_PACMAN} -Sy
 echo -e "\nInstalling prereqs...\n$HR"
 #sed -i "s/^#S/S/" /etc/pacman.d/mirrorlist # Uncomment all Server lines
 UncommentValue S /etc/pacman.d/mirrorlist # Uncomment all Server lines
-${PACMAN} --noconfirm -Sy gptfdisk btrfs-progs-unstable
+${PACMAN} --noconfirm -Sy gptfdisk btrfs-progs
 
 # ------------------------------------------------------------------------
 # Configure Host
@@ -199,7 +202,7 @@ mkfs.vfat /dev/sda1
 mkfs.ext4 /dev/mapper/root
 
 # mount target
-mkdir ${INSTALL_TARGET}
+mkdir -p ${INSTALL_TARGET}
 #mount /dev/sda3 ${INSTALL_TARGET} # this is where we'd mount the unencrypted root partition
 mount /dev/mapper/root ${INSTALL_TARGET}
 mkdir ${INSTALL_TARGET}/boot
